@@ -20,7 +20,7 @@
 			margin-top: 10%;
 		}
 
-		.formulario {
+		.resp {
 			text-align: center;
 		}
 		</style>
@@ -47,66 +47,68 @@
 							<h1> Bem vindo ao busca Cep! </h1>
 						</div>
 						<div class="card-body">
-							<form class="formulario" action="index.php" method="post">
+							<form class="resp" action="index.php" method="post">
 								<div class="form-group">
 									<label> Insira o CEP: </label>
 									<input class="form-control-md is-valid" type="text" name="cep" placeholder="Digite um cep!">
 								</div>
 								<button type="submit" value="Enviar" class="btn btn-primary  btn-info btn-block mb-3 button">Enviar</button>
 							</form>
-							<?php
-								//condicional que verifica se a variavel não é vazia
-								if(!empty($_POST['cep'])){
-									
-									//variavel cep recebe o valor do cep digitado
-									$cep = $_POST['cep'];
+							<div class="resp">
+								<?php
+									//condicional que verifica se a variavel não é vazia
+									if(!empty($_POST['cep'])){
+										
+										//variavel cep recebe o valor do cep digitado
+										$cep = $_POST['cep'];
 
-									//instanciando o objeto (atribuindo a classe Address a variavel address)
-									$address = new Address();
+										//instanciando o objeto (atribuindo a classe Address a variavel address)
+										$address = new Address();
 
-									//executando o metodo get_address passando o cep digitado como parametro
-									$address -> get_address($cep);
-
-									//formatando o cep, substintuindo o caracter '-' por vazio
-									$cep = preg_replace("/[^0-9]/", "", $cep);
-
-									//exibindo as informações adquiridas a partir da chamada da funcao get_address
-									echo "<br><br>CEP Informado: $cep<br>";
-									echo "Rua: $address->logradouro<br>";
-									echo "Bairro: $address->bairro<br>";
-									echo "Estado: $address->uf<br>";
-								}else{
-									echo "Por favor, digite um cep!";
-								}
-
-								class Address {
-									//atributos
-									public $logradouro;
-									public $bairro;
-									public $uf;
-
-									//método recebendo o cep informado pelo usuario
-									function get_address($cep){
+										//executando o metodo get_address passando o cep digitado como parametro
+										$address -> get_address($cep);
 
 										//formatando o cep, substintuindo o caracter '-' por vazio
 										$cep = preg_replace("/[^0-9]/", "", $cep);
 
-										//a partir desse ponto do codigo passa a ocorrer alguns warnings, caso o cep informado não exista, deveria ser implementado um tratamento para infromar o erro ao usuario
-									
-										//atribuindo um endereço eletronico na variavel url e passando o valor do cep
-										$url = "http://viacep.com.br/ws/$cep/xml/";
-
-										// carrega o conteudo do parametro url dentro de um objeto
-										$xml = simplexml_load_file($url);
-
-										//atribiu dados do xml recebido para os respectivos atributos
-										$this->logradouro = $xml->logradouro;
-										$this->bairro = $xml->bairro;
-										$this->uf = $xml->uf;
-										return $xml;
+										//exibindo as informações adquiridas a partir da chamada da funcao get_address
+										echo "<br><br>CEP Informado: $cep<br>";
+										echo "Rua: $address->logradouro<br>";
+										echo "Bairro: $address->bairro<br>";
+										echo "Estado: $address->uf<br>";
+									}else{
+										echo "Por favor, digite um cep!";
 									}
-								}
-							?>
+
+									class Address {
+										//atributos
+										public $logradouro;
+										public $bairro;
+										public $uf;
+
+										//método recebendo o cep informado pelo usuario
+										function get_address($cep){
+
+											//formatando o cep, substintuindo o caracter '-' por vazio
+											$cep = preg_replace("/[^0-9]/", "", $cep);
+
+											//a partir desse ponto do codigo passa a ocorrer alguns warnings, caso o cep informado não exista, deveria ser implementado um tratamento para infromar o erro ao usuario
+										
+											//atribuindo um endereço eletronico na variavel url e passando o valor do cep
+											$url = "http://viacep.com.br/ws/$cep/xml/";
+
+											// carrega o conteudo do parametro url dentro de um objeto
+											$xml = simplexml_load_file($url);
+
+											//atribiu dados do xml recebido para os respectivos atributos
+											$this->logradouro = $xml->logradouro;
+											$this->bairro = $xml->bairro;
+											$this->uf = $xml->uf;
+											return $xml;
+										}
+									}
+								?>
+							</div>
 						</div>
 					</div>
 				</div>
