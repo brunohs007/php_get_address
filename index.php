@@ -49,7 +49,7 @@
 						<div class="card-body">
 							<form class="resp" action="index.php" method="post">
 								<div class="form-group">
-									<label> Insira o CEP: </label>
+									<label>CEP: </label>
 									<input class="form-control-md is-valid" type="text" name="cep" placeholder="Digite um cep!">
 								</div>
 								<button type="submit" value="Enviar" class="btn btn-primary  btn-info btn-block mb-3 button">Enviar</button>
@@ -72,7 +72,7 @@
 										$cep = preg_replace("/[^0-9]/", "", $cep);
 
 										//exibindo as informações adquiridas a partir da chamada da funcao get_address
-										echo "<br><br>CEP Informado: $cep<br>";
+										echo "CEP Informado: $cep<br>";
 										echo "Rua: $address->logradouro<br>";
 										echo "Bairro: $address->bairro<br>";
 										echo "Estado: $address->uf<br>";
